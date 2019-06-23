@@ -17,7 +17,8 @@ class MyNeuralNetwork():
         return x
 
     def loadTrainingData(self, path):
-        return None
+        self.trainingData = np.load(path)
+        return self.trainingData
 
     def train(self, amount, learningRate):
         return None
@@ -26,8 +27,13 @@ class MyNeuralNetwork():
         return None
 
 # NN TEST
-laySize = (3,5,10)
-x = np.ones((laySize[0],1))
+laySize = (2,4,1)
 net = MyNeuralNetwork(laySize)
-preds = net.predict(x)
+
+inputMat = net.loadTrainingData('XORdata.npz')['x']
+z = np.reshape(inputMat[0], (2,1))
+
+preds = net.predict(z)
+
+print(z, "\n")
 print(preds)
