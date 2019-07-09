@@ -11,6 +11,10 @@ class MyNeuralNetwork():
     def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
 
+    def diffsigmoid(self, x):
+        s = self.sigmoid(x)
+        return s * (1 - s)
+
     def predict(self, x):
         for weights, biases in zip(self.weightMatrices, self.biasVectors):
             x = self.sigmoid(np.matmul(weights, x) + biases)
@@ -20,20 +24,35 @@ class MyNeuralNetwork():
         self.trainingData = np.load(path)
         return self.trainingData
 
-    def train(self, amount, learningRate):
+    def train(self, learningRate):
+        inputMat = self.loadTrainingData('XORdata.npz')['x']
+        targetMat = self.loadTrainingData('XORdata.npz')['y']
+
+        for i in range(len(inputMat)):
+            inputs = np.reshape(inputMat[i], (2,1))
+            outputs = self.predict(inputs)
+            targets = targetMat[i]
+
+            outputErrors = targets - outputs
+
+            gradients = outputs * (1 - outputs)
+            gradients = np.matmul(gradients, outputErrors)
+            gradients = np.matmul(gradients, learningRate)        
+
         return None
-    
-    def visualise(self):
-        return None
+
+
+
 
 # NN TEST
 laySize = (2,4,1)
 net = MyNeuralNetwork(laySize)
 
 inputMat = net.loadTrainingData('XORdata.npz')['x']
+
 z = np.reshape(inputMat[0], (2,1))
-
 preds = net.predict(z)
-
 print(z, "\n")
 print(preds)
+
+net.train(0.01)
