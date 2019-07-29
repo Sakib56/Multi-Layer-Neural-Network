@@ -1,3 +1,5 @@
+import sys 
+sys.path.append(sys.path[0][:-4])
 import nn
 
 def getData():
@@ -25,7 +27,7 @@ def testModel():
     print("total error: {0:.3f}".format(totalErr))
 
 
-### MAIN ###
+## MAIN ###
 layers = (2, 8, 6, 8, 1)
 net = nn.NeuralNetwork(layers)
 
