@@ -21,16 +21,18 @@ def testModel():
         preds = net.predict(x)
         err = abs(y-net.predict(x))[0][0]
         totalErr += err
-        print("input:\n{0}\ntarget:{1}\nprediction:{2}\nerror:{3}\n".format(x, y, preds, err, totalErr))
-    print("total error: ", totalErr)
-            
+        print("input:\n{0}\ntarget:{1}\nprediction:{2}\nerror:{3:.3f}\n".format(x, y, preds, err, totalErr))
+    print("total error: {0:.3f}".format(totalErr))
+
 
 ### MAIN ###
-layers = (2, 4, 4, 1)
+layers = (2, 8, 6, 8, 1)
 net = nn.NeuralNetwork(layers)
+
 getData()
 data = net.loadTrainingData('XORdata.npz')
-learningRate = 0.5
+
+learningRate = 0.01
 trainingIter = 10000
 teachModel()
 testModel()
