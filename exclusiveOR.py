@@ -32,7 +32,7 @@ net = nn.NeuralNetwork(layers)
 getData()
 data = net.loadTrainingData('XORdata.npz')
 
-learningRate = 0.01
+learningRate = 0.05
 trainingIter = 10000
 teachModel()
 testModel()
