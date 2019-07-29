@@ -39,40 +39,43 @@ class NeuralNetwork():
         inputs = np.reshape(self.trainingData['x'][r], (2, 1))
         targets = np.reshape(self.trainingData['y'][r], (1, 1))
 
-        numberOfLayers = len(self.weightShapes)
-        feedList = [self.feedforward(inputs, 0)]
-        for i in range(numberOfLayers-1):
+        noOfLayers = len(self.weightShapes)
+        feedList = [inputs]
+        for i in range(noOfLayers):
             previousLayer = feedList[i]
-            feedList.append(self.feedforward(previousLayer, i+1))
+            feedList.append(self.feedforward(previousLayer, i))
 
-        # errorList = [targets - feedList[1]]
-        # gradientList = []
-        # errIdx = 0
-        # for j in range(numberOfLayers-1, 0, -1):
-        #     gradient = self.diffsigmoid(feedList[j])
-        #     gradient = (gradient * errorList[errIdx]) * learningRate
-        #     deltaWeight = gradient @ np.transpose(feedList[0])
+        errorList = [targets - feedList[noOfLayers]]
+        errIdx = 0
+        for j in range(noOfLayers-1, -1, -1):
+            error = errorList[errIdx]
+            gradient = self.diffsigmoid(feedList[j+1])
+            gradient = (gradient * error) * learningRate
+            deltaWeight = gradient @ np.transpose(feedList[j])
+            self.weightMatrices[j] += deltaWeight
+            self.biasVectors[j] += gradient
 
-        #     errIdx += 1
+            errorList.append(np.transpose(self.weightMatrices[j]) @ error)
+            errIdx += 1
+        
+        # outputErrors = targets - feedList[2]
 
-        outputErrors = targets - feedList[1]
-        gradients = self.diffsigmoid(feedList[1])
-        gradients = (gradients * outputErrors) * learningRate
-        deltaWeightsHO = gradients @ np.transpose(feedList[0])
+        # gradients = self.diffsigmoid(feedList[2])
+        # gradients = (gradients * outputErrors) * learningRate
+        # deltaWeightsHO = gradients @ np.transpose(feedList[1])
+        # self.weightMatrices[1] += deltaWeightsHO
+        # self.biasVectors[1] += gradients
 
-        self.weightMatrices[1] += deltaWeightsHO
-        self.biasVectors[1] += gradients
+        # hiddenErrors = np.transpose(self.weightMatrices[1]) @ outputErrors
+        # hiddenGradients = self.diffsigmoid(feedList[1])
+        # hiddenGradients = (hiddenGradients * hiddenErrors) * learningRate
+        # deltaWeightsIH = hiddenGradients @ np.transpose(feedList[0])
 
-        hiddenErrors = np.transpose(self.weightMatrices[1]) @ outputErrors
-        hiddenGradients = self.diffsigmoid(feedList[0])
-        hiddenGradients = (hiddenGradients * hiddenErrors) * learningRate
-        deltaWeightsIH = hiddenGradients @ np.transpose(inputs)
+        # self.weightMatrices[0] += deltaWeightsIH
+        # self.biasVectors[0] += hiddenGradients
 
-        self.weightMatrices[0] += deltaWeightsIH
-        self.biasVectors[0] += hiddenGradients
-
-### MAIN ###
-# layers = (2, 4, 1)
+## MAIN ###
+# layers = (2, 4, 3, 1)
 # net = NeuralNetwork(layers)
 # data = net.loadTrainingData('XORdata.npz')
 

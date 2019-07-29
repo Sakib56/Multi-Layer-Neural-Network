@@ -26,7 +26,7 @@ def testModel():
             
 
 ### MAIN ###
-layers = (2, 4, 1)
+layers = (2, 4, 4, 1)
 net = nn.NeuralNetwork(layers)
 getData()
 data = net.loadTrainingData('XORdata.npz')
