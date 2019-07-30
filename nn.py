@@ -29,17 +29,20 @@ class NeuralNetwork():
         return x
 
     # loads .npz containing training/testing data
-    def loadTrainingData(self, path):
-        self.trainingData = np.load(path)
-        return self.trainingData
+    def loadData(self, inputsIdx, labelsIdx, data):
+        self.inputs = data[inputsIdx]
+        self.labels = data[labelsIdx]
 
     def feedforward(self, layer, layerIndex):
         return self.sigmoid(self.weightMatrices[layerIndex] @ layer + self.biasVectors[layerIndex])
 
     # backpropagation algorithm
     def train(self, learningRate, rowInData):
-        inputs = np.reshape(self.trainingData['x'][rowInData], (2, 1))
-        targets = np.reshape(self.trainingData['y'][rowInData], (1, 1))
+
+        inputs = self.inputs[rowInData]
+        inputs = np.reshape(inputs, (inputs.shape[0], 1))
+        targets = self.labels[rowInData]
+        targets = np.reshape(targets, (targets.shape[0], 1))
 
         noOfLayers = len(self.weightShapes)
         feedList = [inputs]
