@@ -1,4 +1,8 @@
-# Multi-Layer Neural Network
-## a basic multi-layer neural network 
-#### built completely from scratch using python and numpy. 
-to train and test nn just run ```python exclusiveOR.py``` in the directory.
+# Multi-Layer Neural Network 
+### a basic multi-layer neural network built completely from scratch using numpy.
+
+## xor
+to train and test the neural net on the xor data, just run ```python xor.py``` in the xor directory.
+
+## mnist
+to train and test the neural net on the mnist handwritten digits data, just run ```python mnist.py``` in the mnist directory.
