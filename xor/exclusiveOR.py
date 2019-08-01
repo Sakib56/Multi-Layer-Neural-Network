@@ -10,9 +10,9 @@ class xor():
         self.avgError = 0
         self.noOfTests = 0
 
-    def generateData():
-        import genXORdata
-        genXORdata.generate()
+    def generateData(self):
+        import genData as xorData
+        xorData.generate()
 
     def teachModel(self, learningRate, trainingIter, noOfDataPoints):
         import random
@@ -38,10 +38,11 @@ class xor():
 layers = (2, 8, 6, 8, 1)
 net = nn.NeuralNetwork(layers)
 
+xorModel = xor(net)
+
+xorModel.generateData()
 data = np.load('XORdata.npz')
 net.loadData('x', 'y', data)
-
-xorModel = xor(net)
 
 noOfDataPoints = data['x'].shape[0]
 learningRate = 0.05

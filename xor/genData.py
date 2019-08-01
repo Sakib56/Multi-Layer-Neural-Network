@@ -11,9 +11,9 @@ def generate():
     l = [1]
     outputsMat = np.matrix([o,l,l,o])
 
+    # TODO: Fix where .npz saves
     trainingFileStr = 'XORdata.npz'
     np.savez(trainingFileStr, x=inputsMat, y=outputsMat)
 
     data = np.load(trainingFileStr)
-
     print("inputs:\n{0}\n\ntargets:\n{1}".format(data['x'], data['y']))
