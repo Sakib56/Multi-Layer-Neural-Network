@@ -1,8 +1,15 @@
 import numpy as np
 
 def generate():
-    inputsMat = np.mat([[0,0],[0,1],[1,0],[1,1]])
-    outputsMat = np.mat([[0],[1],[1],[0]])
+    oo = [0,0]
+    ol = [0,1]
+    lo = [1,0]
+    ll = [1,1]
+    inputsMat = np.matrix([oo,ol,lo,ll])
+
+    o = [0]
+    l = [1]
+    outputsMat = np.matrix([o,l,l,o])
 
     trainingFileStr = 'XORdata.npz'
     np.savez(trainingFileStr, x=inputsMat, y=outputsMat)

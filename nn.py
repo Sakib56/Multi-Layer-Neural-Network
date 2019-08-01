@@ -38,11 +38,8 @@ class NeuralNetwork():
 
     # backpropagation algorithm
     def train(self, learningRate, rowInData):
-
-        inputs = self.inputs[rowInData]
-        inputs = np.reshape(inputs, (inputs.shape[0], 1))
-        targets = self.labels[rowInData]
-        targets = np.reshape(targets, (targets.shape[0], 1))
+        inputs = np.reshape(self.inputs[rowInData], (self.inputs[rowInData].shape[0], 1))
+        targets = np.reshape(self.labels[rowInData], (self.labels[rowInData].shape[0], 1))
 
         noOfLayers = len(self.weightShapes)
         feedList = [inputs]
