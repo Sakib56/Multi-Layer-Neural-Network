@@ -35,6 +35,7 @@ class mnist():
 
 
 ## MAIN ###
+# TODO: add some sort of gui/cli for using nn
 layers = (784, 16, 10)
 learningRate = 0.1
 trainingTime = 15
