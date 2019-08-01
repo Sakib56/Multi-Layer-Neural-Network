@@ -1,5 +1,4 @@
-# Multi-Layer Neural Network
-## a basic multi-layer neural network 
+# Multi-Layer Neural Network ## a basic multi-layer neural network 
 #### built completely from scratch using python and numpy. 
 
 ## xor
