@@ -1,6 +1,5 @@
 # Multi-Layer Neural Network 
-### a basic multi-layer neural network 
-#### built completely from scratch using python and numpy. 
+### a basic multi-layer neural network built completely from scratch using vanilla python and numpy.
 
 ## xor
 to train and test the neural net on the xor data, just run ```python xor.py``` in the xor directory.
