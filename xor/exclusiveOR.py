@@ -35,7 +35,6 @@ class xor():
 
 
 ## MAIN ###
-# TODO: add some sort of gui/cli for using nn
 layers = (2, 8, 6, 8, 1)
 net = nn.NeuralNetwork(layers)
 

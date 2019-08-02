@@ -36,9 +36,9 @@ class mnist():
 
 ## MAIN ###
 # TODO: add some sort of gui/cli for using nn
-layers = (784, 16, 10)
+layers = (784, 16, 16, 10)
 learningRate = 0.1
-trainingTime = 15
+trainingTime = 60
 data = np.load('MNISTdata.npz')
 noOfDataPoints = data['training_images'].shape[0]
 
