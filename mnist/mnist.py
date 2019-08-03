@@ -20,6 +20,7 @@ class mnist():
         while time.time() < timeLimit:
             self.net.train(learningRate, random.choice([i for i in range(noOfDataPoints)]))
             self.iterationsSoFar += 1
+        if timeLimit > 60*10: print("note: training w/ sigmoid for 10mins+ may result in integer overflow (within np.exp(-x))")        
         print("training completed in {0:.2f}s\n".format(time.time() - timeLimit + trainingTime))
 
     def testModel(self, testImages, testLabels):
