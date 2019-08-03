@@ -5,7 +5,7 @@ class NeuralNetwork():
         self.weightShapes = [(r, c) for r, c in zip(layers[1:], layers[:-1])]
         self.weightMatrices = [np.random.standard_normal(ws)/ws[1]**0.5 for ws in self.weightShapes]
         self.biasVectors = [np.zeros((ls, 1)) for ls in layers[1:]]
-        self.setActivation(self, "sigmoid")
+        self.setActivation("sigmoid")
 
     # prints current weights and biases
     def info(self):
