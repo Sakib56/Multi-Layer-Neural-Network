@@ -5,6 +5,7 @@ class NeuralNetwork():
         self.weightShapes = [(r, c) for r, c in zip(layers[1:], layers[:-1])]
         self.weightMatrices = [np.random.standard_normal(ws)/ws[1]**0.5 for ws in self.weightShapes]
         self.biasVectors = [np.zeros((ls, 1)) for ls in layers[1:]]
+        self.setActivation(self, "sigmoid")
 
     # prints current weights and biases
     def info(self):
@@ -13,19 +14,22 @@ class NeuralNetwork():
             print("\nweight{2}: \n{0}\nbias{2}: \n{1}\n".format(weights, biases, layerNumber))
             layerNumber += 1
 
-    # activation function
-    def sigmoid(self, x):
-        return 1 / (1 + np.exp(-x))
-
-    # differentiated activation function
-    def diffsigmoid(self, x):
-        # no need to run through sigmoid again since x has already been through activation
-        return x * (1 - x)
+    # sets activation func and differentiated activation func, defualt is sigmoid
+    def setActivation(self, type):
+        if type == "sigmoid":
+            self.activation = lambda x : 1 / (1 + np.exp(-x))
+            self.diffActivation = lambda x: x * (1 - x)
+        if type == "tanh":
+            self.activation = lambda x : np.tanh(x)
+            self.diffActivation = lambda x: 1 - (x * x)
+        if type == "relu":
+            self.activation = lambda x : x * (x > 0)
+            self.diffActivation = lambda x: (x > 0).astype(int)
 
     # feedforward algorithm
     def predict(self, x):
         for weights, biases in zip(self.weightMatrices, self.biasVectors):
-            x = self.sigmoid(weights @ x + biases)
+            x = self.activation(weights @ x + biases)
         return x
 
     # loads .npz containing training/testing data
@@ -33,8 +37,8 @@ class NeuralNetwork():
         self.inputs = data[inputsIdx]
         self.labels = data[labelsIdx]
 
-    def feedforward(self, layer, layerIndex):
-        return self.sigmoid(self.weightMatrices[layerIndex] @ layer + self.biasVectors[layerIndex])
+    def feedForward(self, layer, layerIndex):
+        return self.activation(self.weightMatrices[layerIndex] @ layer + self.biasVectors[layerIndex])
 
     # backpropagation algorithm
     def train(self, learningRate, rowInData):
@@ -45,13 +49,13 @@ class NeuralNetwork():
         feedList = [inputs]
         for i in range(noOfLayers):
             previousLayer = feedList[i]
-            feedList.append(self.feedforward(previousLayer, i))
+            feedList.append(self.feedForward(previousLayer, i))
 
         errorList = [targets - feedList[noOfLayers]]
         errIdx = 0
         for j in range(noOfLayers-1, -1, -1):
             error = errorList[errIdx]
-            gradient = self.diffsigmoid(feedList[j+1])
+            gradient = self.diffActivation(feedList[j+1])
             gradient = (gradient * error) * learningRate
             deltaWeight = gradient @ np.transpose(feedList[j])
             self.weightMatrices[j] += deltaWeight
