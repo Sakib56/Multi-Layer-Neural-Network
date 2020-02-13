@@ -1,4 +1,4 @@
-# Multi-Layer Neural Network 
+# Multi-Layer Neural Network (2019)
 ### a basic multi-layer neural network built completely from scratch using numpy.
 
 ## xor
